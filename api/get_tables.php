@@ -2,8 +2,7 @@
 require_once "../config/db.php";
 
 try {
-    // JOIN กับ session ที่ยังเปิดอยู่ (ถ้ามี) เพื่อให้ POS รู้ว่าโต๊ะไหนมี session_id อะไรตอนนี้
-    // เวลาคงเหลือคำนวณจากเวลาเปิดโต๊ะ+ระยะเวลาแพ็กเกจฝั่ง DB เพื่อให้ทุกอุปกรณ์เห็นค่าตรงกันเสมอ
+    // เวลาคงเหลือคำนวณฝั่ง DB กันแต่ละอุปกรณ์เห็นค่าไม่ตรงกัน
     $sql = "SELECT t.id, t.table_number, t.status,
                    s.id AS session_id, s.qr_code_token, s.opened_at,
                    s.package_name, s.package_price, s.adults, s.children, s.duration_minutes,

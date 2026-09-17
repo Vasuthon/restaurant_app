@@ -63,7 +63,6 @@
 
 <div id="app" class="flex-grow flex flex-col" v-cloak>
 
-    <!-- TOP NAVIGATION BAR -->
     <header class="bg-white border-b border-[#E8DFCF] px-4 md:px-6 py-3 sticky top-0 z-50 flex flex-col sm:flex-row gap-3 justify-between items-center shadow-xl">
         <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
             <div class="flex items-center gap-3">
@@ -89,10 +88,8 @@
         </div>
     </header>
 
-    <!-- MAIN APP CONTAINER -->
     <main class="flex-grow p-2 sm:p-4 md:p-6 flex items-center justify-center relative">
 
-        <!-- 📱 CUSTOMER MOBILE INTERFACE -->
         <div class="mobile-viewport">
           <div class="customer-shell">
 
@@ -126,7 +123,6 @@
 
             <div class="customer-body">
 
-              <!-- Customer access requires session from table QR -->
               <div v-if="custStep === 'session-required'" class="space-y-4">
                 <div class="hero-card">
                   <div class="text-[11px] text-[#B8860B] font-bold tracking-wider mb-1">TABLE SESSION REQUIRED</div>
@@ -139,7 +135,6 @@
                 </div>
               </div>
 
-              <!-- MENU -->
               <div v-if="custStep === 'menu'" class="space-y-3">
                 <div>
                   <div class="section-title">รายการเมนู</div>
@@ -175,7 +170,6 @@
                 </div>
               </div>
 
-              <!-- CART -->
               <div v-if="custStep === 'cart'" class="space-y-3">
                 <div class="flex items-end justify-between">
                   <div>
@@ -215,7 +209,6 @@
                 </button>
               </div>
 
-              <!-- TRACKER -->
               <div v-if="custStep === 'tracker'" class="space-y-3">
                 <div>
                   <div class="section-title">เรียกบริการพนักงาน</div>
@@ -262,7 +255,6 @@
                 </div>
               </div>
 
-              <!-- BILL -->
               <div v-if="custStep === 'bill'" class="space-y-3">
                 <div>
                   <div class="section-title">สรุปยอดชำระเงิน</div>
@@ -295,7 +287,6 @@
 
             </div>
 
-            <!-- BOTTOM NAVIGATION BAR -->
             <div v-if="['menu','cart','tracker','bill'].includes(custStep)" class="bottom-nav">
               <button @click="custStep='menu'" class="nav-btn" :class="{active:custStep==='menu'}">
                 <i class="fa-solid fa-bowl-food"></i>เมนู
@@ -319,10 +310,8 @@
 
 </div>
 
-<!-- SHARED APP METHODS -->
 <script src="assets/shared.js"></script>
 
-<!-- VUE 3 APP SCRIPT -->
 <script>
     const { createApp } = Vue
 

@@ -25,8 +25,7 @@ try {
         exit();
     }
 
-    // กันการลบโต๊ะที่เคยมีประวัติการเปิดโต๊ะ/ออเดอร์ เพราะ TABLE_SESSIONS อ้างอิงแบบ ON DELETE CASCADE
-    // ถ้าลบตรงนี้จะทำให้ประวัติออเดอร์เก่าของโต๊ะนี้ถูกลบตามไปด้วย
+    // TABLE_SESSIONS อ้างอิงแบบ CASCADE ลบตรงนี้จะพาประวัติออเดอร์ของโต๊ะหายไปด้วย
     $sessionCheck = $pdo->prepare("SELECT COUNT(*) AS cnt FROM TABLE_SESSIONS WHERE table_id = ?");
     $sessionCheck->execute([$id]);
     if ((int)$sessionCheck->fetch()['cnt'] > 0) {

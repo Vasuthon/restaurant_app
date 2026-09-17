@@ -14,7 +14,7 @@ $note = $data['note'] ?? '';
 try {
     $pdo->beginTransaction();
 
-    // 1. เช็คก่อนว่า session นี้เปิดรับออเดอร์อยู่จริง (กันสั่งเข้าโต๊ะที่ปิดไปแล้ว)
+    // กันสั่งเข้าโต๊ะที่ปิดไปแล้ว
     $stmtSession = $pdo->prepare("SELECT status FROM TABLE_SESSIONS WHERE id = ?");
     $stmtSession->execute([$session_id]);
     $session = $stmtSession->fetch();
@@ -33,11 +33,10 @@ try {
 
     $order_id = generateUUID();
 
-    // 2. บันทึกลงตาราง ORDERS
     $stmtOrder = $pdo->prepare("INSERT INTO ORDERS (id, session_id, status, note) VALUES (?, ?, 'pending', ?)");
     $stmtOrder->execute([$order_id, $session_id, $note]);
 
-    // 3. ดึงราคา+สถานะเมนูจาก DB เองทุกรายการ ห้ามใช้ราคาที่ client ส่งมา
+    // ดึงราคา+สถานะเมนูจาก DB เองทุกรายการ ห้ามใช้ราคาที่ client ส่งมา
     $stmtMenu = $pdo->prepare("SELECT price, is_available FROM MENU_ITEMS WHERE id = ?");
     $stmtItem = $pdo->prepare("INSERT INTO ORDER_ITEMS (id, order_id, menu_item_id, quantity, price_at_order, note, item_status) VALUES (?, ?, ?, ?, ?, ?, 'pending')");
 

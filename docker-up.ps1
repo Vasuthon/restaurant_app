@@ -1,12 +1,6 @@
-# Use this instead of "docker compose up" directly.
-# Detects this machine's real LAN IP (the one phones on the same Wi-Fi can reach) and
-# passes it into the container via the HOST_LAN_IP env var, so the staff dashboard can
-# build correct customer links / table QR codes.
-# If the machine's IP changes later (e.g. router restart), just rerun this script —
-# the links/QR codes will pick up the new IP automatically.
-#
-# Usage: .\docker-up.ps1        (same as docker compose up)
-#        .\docker-up.ps1 -d     (background, same as docker compose up -d)
+# Wraps "docker compose up" but detects the host's LAN IP first and passes it in
+# as HOST_LAN_IP, so table QR codes point somewhere customers' phones can reach.
+# Usage: .\docker-up.ps1 [-d]
 
 $socket = New-Object System.Net.Sockets.Socket(
     [System.Net.Sockets.AddressFamily]::InterNetwork,

@@ -19,8 +19,7 @@ try {
         exit();
     }
 
-    // กันการลบหมวดหมู่ที่ยังมีวัตถุดิบอยู่ เพราะ MENU_ITEMS อ้างอิงแบบ ON DELETE CASCADE
-    // ถ้าลบตรงนี้จะทำให้วัตถุดิบทั้งหมดในหมวดนี้ถูกลบตามไปด้วย
+    // MENU_ITEMS อ้างอิงแบบ CASCADE ลบตรงนี้จะพาวัตถุดิบในหมวดหายไปด้วย
     $itemCheck = $pdo->prepare("SELECT COUNT(*) AS cnt FROM MENU_ITEMS WHERE category_id = ?");
     $itemCheck->execute([$id]);
     if ((int)$itemCheck->fetch()['cnt'] > 0) {

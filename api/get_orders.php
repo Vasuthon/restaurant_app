@@ -2,8 +2,7 @@
 require_once "../config/auth.php";
 require_once "../config/db.php";
 
-// เปิดให้ลูกค้าดูออเดอร์ของโต๊ะตัวเองได้โดยไม่ต้องล็อกอิน (ต้องระบุ session_id/table_id ของตัวเอง)
-// แต่ถ้าไม่กรองอะไรเลย (มุมมองครัว/พนักงานเห็นทุกโต๊ะ) ต้องล็อกอินก่อน
+// ลูกค้าดูออเดอร์โต๊ะตัวเองได้โดยไม่ล็อกอิน ถ้าไม่กรอง session_id/table_id เลยถือเป็นมุมมองครัว/พนักงาน ต้องล็อกอิน
 if (empty($_GET['session_id']) && empty($_GET['table_id'])) {
     requireStaffAuth();
 }
@@ -21,14 +20,12 @@ try {
         $params[] = $_GET['table_id'];
     }
 
-    // มุมมองครัว/พนักงาน (ไม่ได้ระบุ session_id/table_id) ให้เห็นเฉพาะโต๊ะที่ยังเปิดอยู่เท่านั้น
-    // กันออเดอร์เก่าของโต๊ะที่เช็คบิล/ปิดโต๊ะไปแล้วค้างล้นหน้าจอ KDS
+    // มุมมองครัว/พนักงาน เอาเฉพาะโต๊ะที่ยังเปิดอยู่ กันของเก่าจากโต๊ะปิดบิลแล้วมาล้น KDS
     if (empty($_GET['session_id']) && empty($_GET['table_id'])) {
         $where[] = "os.status = 'open'";
     }
 
     $whereSql = $where ? ("WHERE " . implode(" AND ", $where)) : "";
-    // ไม่กรองอะไรเลย (มุมมองครัว/พนักงาน) จำกัดจำนวนรายการล่าสุดกันข้อมูลโตไม่จำกัดเมื่อใช้งานจริงไปนานๆ
     $limitSql = (empty($_GET['session_id']) && empty($_GET['table_id'])) ? "LIMIT 100" : "";
 
     $sql = "SELECT o.id, o.status, o.note, o.created_at, os.table_id, os.id AS session_id

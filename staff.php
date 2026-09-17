@@ -2,14 +2,12 @@
 <html lang="th">
 <head>
     <?php $pageTitle = 'หลังบ้าน - พนักงาน & ครัว | HOTPOT MAN'; include __DIR__ . '/partials/head.php'; ?>
-    <!-- QRCode.js Library สำหรับสร้าง QR Code จริง -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body class="min-h-screen antialiased flex flex-col">
 
 <div id="app" class="flex-grow flex flex-col" v-cloak>
 
-    <!-- TOP NAVIGATION BAR -->
     <header class="bg-white border-b border-[#E8DFCF] px-4 md:px-6 py-3 sticky top-0 z-50 flex flex-col sm:flex-row gap-3 justify-between items-center shadow-xl">
         <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
             <div class="flex items-center gap-3">
@@ -49,13 +47,10 @@
         </div>
     </header>
 
-    <!-- MAIN APP CONTAINER -->
     <main class="flex-grow p-2 sm:p-4 md:p-6 flex items-center justify-center relative">
 
-        <!-- 🖥️ STAFF & KITCHEN INTERFACE -->
         <div v-if="staffUnlocked" class="w-full max-w-7xl min-h-[80vh] bg-[#F1EBE0] rounded-3xl border border-[#E8DFCF] shadow-2xl flex flex-col md:flex-row overflow-hidden z-10">
 
-            <!-- SIDEBAR NAVIGATION (STAFF) -->
             <aside v-if="currentMode === 'staff'" class="w-full md:w-64 bg-white border-r border-[#E8DFCF] p-4 flex flex-col justify-between shrink-0">
                 <div class="space-y-4">
                     <div class="text-xs font-bold text-[#7A7266] tracking-wider uppercase">เมนูจัดการ POS</div>
@@ -76,7 +71,6 @@
                 </div>
             </aside>
 
-            <!-- SIDEBAR NAVIGATION (KITCHEN) -->
             <aside v-if="currentMode === 'kitchen'" class="w-full md:w-64 bg-white border-r border-[#E8DFCF] p-4 flex flex-col justify-between shrink-0">
                 <div class="space-y-4">
                     <div class="text-xs font-bold text-[#7A7266] tracking-wider uppercase">ระบบครัว KDS</div>
@@ -92,10 +86,8 @@
                 </div>
             </aside>
 
-            <!-- MAIN CONTENT AREA -->
             <main class="flex-1 p-4 md:p-6 overflow-y-auto bg-[#F7F2EA]">
 
-                <!-- 0. STAFF: DASHBOARD -->
                 <div v-if="currentMode==='staff' && staffTab==='dashboard'" class="space-y-6">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-[#1C1815] flex items-center gap-2">
@@ -106,9 +98,6 @@
                         </span>
                     </div>
 
-                    <!-- ลิงก์วงแลนสำหรับลูกค้า: ตรวจ IP เครื่องอัตโนมัติ กันพนักงานต้องเปิด cmd หา ipconfig เอง
-                         QR โต๊ะทุกอันอ้างอิง URL ปัจจุบันที่เปิดหน้านี้อยู่ ดังนั้นถ้าเปิดหน้านี้ผ่านลิงก์นี้ (แทน localhost)
-                         มือถือลูกค้าที่ต่อไวไฟเดียวกันจะสแกน QR เข้าได้ทันที ไม่ต้องตั้งค่า router -->
                     <div v-if="lanUrl" class="bg-white border border-[#E8DFCF] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
                         <div class="min-w-0">
                             <div class="text-xs font-bold text-[#1C1815] flex items-center gap-1.5">
@@ -123,7 +112,7 @@
                         </button>
                     </div>
 
-                    <!-- Pending Service Calls (เรียกพนักงานจากลูกค้า) - เฉพาะเช็คบิล/เก็บถาด ไม่รวมเติมน้ำซุปซึ่งเป็นของครัว - อยู่บนสุดให้เห็นทันทีไม่ต้องเลื่อน -->
+                    <!-- staffServiceCalls = เช็คบิล/เก็บถาดเท่านั้น เติมน้ำซุปอยู่ฝั่งครัวแยกต่างหาก -->
                     <div v-if="staffServiceCalls.length" class="bg-white border-2 border-accent-crimson rounded-2xl p-5 space-y-3">
                         <h3 class="text-sm font-bold text-[#1C1815] flex items-center gap-2">
                             <i class="fa-solid fa-bell text-accent-crimson"></i> คำเรียกพนักงานที่รอดำเนินการ
@@ -140,7 +129,6 @@
                         </div>
                     </div>
 
-                    <!-- Statistics Cards Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="bg-white border border-[#E8DFCF] rounded-2xl p-4 flex items-center justify-between">
                             <div>
@@ -183,9 +171,7 @@
                         </div>
                     </div>
 
-                    <!-- Detailed Analytics Row -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Table Occupancy Details -->
                         <div class="bg-white border border-[#E8DFCF] rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-bold text-[#1C1815] flex items-center gap-2">
                                 <i class="fa-solid fa-circle-nodes text-accent-crimson"></i> สถานะโต๊ะปัจจุบันและแพ็กเกจ
@@ -210,7 +196,6 @@
                             </div>
                         </div>
 
-                        <!-- Menu Order Popularity / Quick Actions Summary -->
                         <div class="bg-white border border-[#E8DFCF] rounded-2xl p-5 space-y-4">
                             <h3 class="text-sm font-bold text-[#1C1815] flex items-center gap-2">
                                 <i class="fa-solid fa-fire text-accent-gold"></i> สรุปสถานะออเดอร์ในระบบครัว
@@ -239,7 +224,6 @@
                     </div>
                 </div>
 
-                <!-- 1. STAFF: TABLE MANAGEMENT -->
                 <div v-if="currentMode==='staff' && staffTab==='tables'" class="space-y-6">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-[#1C1815] flex items-center gap-2">
@@ -264,7 +248,6 @@
                                 </span>
                             </div>
 
-                            <!-- Occupied Info -->
                             <div v-if="table.status==='occupied'" class="space-y-2 text-xs bg-[#F1EBE0] p-2.5 rounded-xl border border-[#F0D8D6]">
                                 <div class="flex justify-between text-[#3D372E]">
                                     <span>จำนวน:</span>
@@ -287,7 +270,6 @@
                                 </div>
                             </div>
 
-                            <!-- Disabled: re-enable -->
                             <div v-else-if="table.status==='disabled'" class="pt-2 space-y-2">
                                 <button @click="setTableStatus(table, 'available')" class="w-full bg-[#EEE6D8] hover:bg-[#E8DFCF] text-[#1C1815] font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1">
                                     <i class="fa-solid fa-lock-open"></i> เปิดใช้งาน
@@ -302,7 +284,6 @@
                                 </div>
                             </div>
 
-                            <!-- Open Table Action -->
                             <div v-else class="pt-2 space-y-2">
                                 <button @click="openTableModal(table)" class="w-full bg-accent-emerald hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1">
                                     <i class="fa-solid fa-plus"></i> เปิดโต๊ะใหม่
@@ -323,7 +304,6 @@
                     </div>
                 </div>
 
-                <!-- 2. KITCHEN DISPLAY SYSTEM (KDS) & ORDERS -->
                 <div v-if="currentMode==='kitchen' && kitchenTab==='orders'" class="space-y-6">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-[#1C1815] flex items-center gap-2">
@@ -397,7 +377,6 @@
                     </div>
                 </div>
 
-                <!-- 3. MENU STOCK MANAGEMENT -->
                 <div v-if="currentMode==='kitchen' && kitchenTab==='stock'" class="space-y-4">
                     <div class="flex justify-between items-center flex-wrap gap-3">
                         <div>
@@ -476,7 +455,6 @@
 
     </main>
 
-    <!-- MODAL 0: STAFF PIN GATE -->
     <div v-if="showPinModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-sm w-full space-y-4">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -500,7 +478,6 @@
         </div>
     </div>
 
-    <!-- MODAL 1: OPEN TABLE SESSION -->
     <div v-if="showOpenModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-md w-full space-y-4">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -548,7 +525,6 @@
         </div>
     </div>
 
-    <!-- MODAL 1B: EDIT OPEN TABLE (จำนวนคน / ต่อเวลา) -->
     <div v-if="showEditTableModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-md w-full space-y-4">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -581,7 +557,6 @@
         </div>
     </div>
 
-    <!-- MODAL 1C: ADD / RENAME TABLE -->
     <div v-if="showTableFormModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-sm w-full space-y-4">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -606,7 +581,6 @@
         </div>
     </div>
 
-    <!-- MODAL 2: DISPLAY QR CODE FOR CUSTOMER PHONE SCANNING -->
     <div v-if="showQRModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-sm w-full space-y-4 text-center">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center justify-center gap-2">
@@ -616,7 +590,6 @@
                 แพ็กเกจ: <b class="text-amber-400">{{ selectedQRTable?.packageName }}</b>
             </p>
 
-            <!-- QR Container generated dynamically -->
             <div class="bg-white p-4 rounded-2xl inline-block shadow-lg my-2">
                 <div id="qrcode-container" class="flex justify-center"></div>
             </div>
@@ -641,7 +614,6 @@
         </div>
     </div>
 
-    <!-- MODAL 3: ADD/EDIT STOCK ITEM -->
     <div v-if="showStockModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-md w-full space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -724,7 +696,6 @@
         </div>
     </div>
 
-    <!-- MODAL 4: MANAGE CATEGORIES -->
     <div v-if="showCategoryModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-md w-full space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -774,7 +745,6 @@
         </div>
     </div>
 
-    <!-- MODAL 5: CHECK BILL -->
     <div v-if="showBillModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-[#E8DFCF] rounded-3xl p-6 max-w-md w-full space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 class="text-lg font-bold text-[#1C1815] flex items-center gap-2">
@@ -842,7 +812,6 @@
         </div>
     </div>
 
-    <!-- PRINT-ONLY RECEIPT (invisible on screen, shown via @media print) -->
     <div id="receiptPrintArea" v-if="billData">
         <div style="font-family: 'Courier New', monospace; width: 280px; margin: 0 auto; color: #000; padding: 16px 0;">
             <div style="text-align:center;">
@@ -909,10 +878,8 @@
 
 </div>
 
-<!-- SHARED APP METHODS -->
 <script src="assets/shared.js"></script>
 
-<!-- VUE 3 APP SCRIPT -->
 <script>
     const { createApp } = Vue
 

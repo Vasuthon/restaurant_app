@@ -19,8 +19,7 @@ try {
         exit();
     }
 
-    // กันการลบวัตถุดิบที่เคยถูกสั่งไปแล้ว เพราะ ORDER_ITEMS อ้างอิงแบบ ON DELETE CASCADE
-    // ถ้าลบตรงนี้จะทำให้ประวัติออเดอร์เก่าถูกลบตามไปด้วย
+    // ORDER_ITEMS อ้างอิงแบบ CASCADE ลบตรงนี้จะพาประวัติออเดอร์เก่าหายไปด้วย
     $orderCheck = $pdo->prepare("SELECT COUNT(*) AS cnt FROM ORDER_ITEMS WHERE menu_item_id = ?");
     $orderCheck->execute([$id]);
     if ((int)$orderCheck->fetch()['cnt'] > 0) {
