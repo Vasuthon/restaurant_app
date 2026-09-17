@@ -21,9 +21,15 @@ try {
         $params[] = $_GET['table_id'];
     }
 
+    // มุมมองครัว/พนักงาน (ไม่ได้ระบุ session_id/table_id) ให้เห็นเฉพาะโต๊ะที่ยังเปิดอยู่เท่านั้น
+    // กันออเดอร์เก่าของโต๊ะที่เช็คบิล/ปิดโต๊ะไปแล้วค้างล้นหน้าจอ KDS
+    if (empty($_GET['session_id']) && empty($_GET['table_id'])) {
+        $where[] = "os.status = 'open'";
+    }
+
     $whereSql = $where ? ("WHERE " . implode(" AND ", $where)) : "";
     // ไม่กรองอะไรเลย (มุมมองครัว/พนักงาน) จำกัดจำนวนรายการล่าสุดกันข้อมูลโตไม่จำกัดเมื่อใช้งานจริงไปนานๆ
-    $limitSql = $where ? "" : "LIMIT 100";
+    $limitSql = (empty($_GET['session_id']) && empty($_GET['table_id'])) ? "LIMIT 100" : "";
 
     $sql = "SELECT o.id, o.status, o.note, o.created_at, os.table_id, os.id AS session_id
             FROM ORDERS o
@@ -41,7 +47,7 @@ try {
         $placeholders = implode(',', array_fill(0, count($orderIds), '?'));
 
         $stmtItems = $pdo->prepare(
-            "SELECT oi.id, oi.order_id, oi.menu_item_id, oi.quantity, oi.note, m.name
+            "SELECT oi.id, oi.order_id, oi.menu_item_id, oi.quantity, oi.note, oi.item_status, m.name
              FROM ORDER_ITEMS oi
              JOIN MENU_ITEMS m ON m.id = oi.menu_item_id
              WHERE oi.order_id IN ($placeholders)"

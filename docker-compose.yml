@@ -36,6 +36,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       STAFF_PIN: ${STAFF_PIN}
       TZ: Asia/Bangkok
+      # IP วงแลนจริงของเครื่อง host (ตรวจโดย docker-up.ps1 ก่อนสั่ง up) ใช้สร้างลิงก์/QR ให้ลูกค้าสแกน
+      HOST_LAN_IP: ${HOST_LAN_IP:-}
     volumes:
       - ./index.php:/var/www/html/index.php
       - ./staff.php:/var/www/html/staff.php
@@ -43,6 +45,7 @@ services:
       - ./assets:/var/www/html/assets
       - ./api:/var/www/html/api
       - ./config:/var/www/html/config
+      - ./uploads:/var/www/html/uploads
     depends_on:
       db:
         condition: service_healthy

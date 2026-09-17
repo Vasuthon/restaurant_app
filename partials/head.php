@@ -1,4 +1,4 @@
-<?php $pageTitle = $pageTitle ?? 'ชาบูหมาล่าบุฟเฟต์ - Buffet POS System'; ?>
+<?php $pageTitle = $pageTitle ?? 'HOTPOT MAN - Buffet POS System'; ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= htmlspecialchars($pageTitle) ?></title>
@@ -15,14 +15,14 @@
             extend: {
                 colors: {
                     dark: {
-                        base: '#0D0D0D',
-                        card: '#1B1B1B',
-                        border: '#353535',
-                        hover: '#2A2A2A'
+                        base: '#F7F2EA',
+                        card: '#FFFFFF',
+                        border: '#E8DFCF',
+                        hover: '#EEE6D8'
                     },
                     accent: {
-                        crimson: '#D32F2F',
-                        gold: '#D4AF37',
+                        crimson: '#A31E22',
+                        gold: '#A67C00',
                         emerald: '#2E7D32'
                     }
                 }
@@ -34,9 +34,16 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
     [v-cloak] { display: none !important; }
-    body { font-family: 'Prompt', sans-serif; background: #151312 !important; color: #F7F1E8 !important; }
+    body { font-family: 'Prompt', sans-serif; background: #F7F2EA !important; color: #1C1815 !important; }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #111; }
-    ::-webkit-scrollbar-thumb { background: #4A2A26; border-radius: 8px; }
+    ::-webkit-scrollbar-track { background: #EEE6D8; }
+    ::-webkit-scrollbar-thumb { background: #A31E22; border-radius: 8px; }
+
+    #receiptPrintArea { display: none; }
+    @media print {
+        body * { visibility: hidden; }
+        #receiptPrintArea { display: block !important; visibility: visible; position: absolute; left: 0; top: 0; width: 100%; }
+        #receiptPrintArea * { visibility: visible; }
+    }
 </style>

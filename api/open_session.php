@@ -49,6 +49,12 @@ try {
         exit();
     }
 
+    if ($table['status'] === 'disabled') {
+        $pdo->rollBack();
+        echo json_encode(["status" => "error", "message" => "โต๊ะนี้ปิดใช้งานชั่วคราวอยู่"]);
+        exit();
+    }
+
     $session_id = generateUUID();
     $qr_token = bin2hex(random_bytes(16)); // token สุ่มแยกจาก id กันคนเดา URL
 

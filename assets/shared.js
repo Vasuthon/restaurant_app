@@ -16,9 +16,9 @@ const SharedAppMethods = {
     },
     getStatusBadgeClass(status) {
         const map = {
-            pending: 'bg-amber-900/60 text-amber-300 border border-amber-700',
-            cooking: 'bg-blue-900/60 text-blue-300 border border-blue-700',
-            served: 'bg-emerald-900/60 text-emerald-300 border border-emerald-700'
+            pending: 'bg-amber-50 text-amber-700 border border-amber-300',
+            cooking: 'bg-blue-50 text-blue-700 border border-blue-300',
+            served: 'bg-emerald-50 text-emerald-700 border border-emerald-300'
         }
         return map[status] || ''
     },
